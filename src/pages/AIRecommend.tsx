@@ -23,66 +23,205 @@ import {
   Navigation,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import restaurantImage from "@/assets/restaurant.jpg";
-import cafeImage from "@/assets/cafe.jpg";
-import nightmarketImage from "@/assets/nightmarket.jpg";
+import { set } from "date-fns";
 
 const quickPrompts = [
   { icon: Utensils, text: "Gợi ý quán ăn ngon gần đây", category: "food" },
   { icon: Coffee, text: "Quán cà phê yên tĩnh để làm việc", category: "cafe" },
-  { icon: PartyPopper, text: "Địa điểm vui chơi cuối tuần", category: "entertainment" },
-  { icon: Compass, text: "Nơi check-in đẹp cho Instagram", category: "trending" },
+  {
+    icon: PartyPopper,
+    text: "Địa điểm vui chơi cuối tuần",
+    category: "entertainment",
+  },
+  {
+    icon: Compass,
+    text: "Nơi check-in đẹp cho Instagram",
+    category: "trending",
+  },
 ];
 
 const sampleRecommendations = [
   {
-    id: "1",
-    name: "Quán Phở Thìn Bờ Hồ",
-    image: restaurantImage,
-    category: "Nhà hàng",
-    rating: 4.8,
-    matchScore: 98,
-    reason: "Phù hợp với sở thích ẩm thực Việt của bạn",
-    distance: "0.5 km",
-    priceRange: "50K - 100K",
-    highlights: ["Signature: Phở bò tái", "Nước dùng đậm đà", "Không gian truyền thống"],
+    id: "food-1",
+    name: "Phở Bát Đàn",
+    image: "/src/assets/pho_bat_dan.jpg",
+    category: "food",
+    rating: 4.7,
+    matchScore: 96,
+    reason: "Phở truyền thống nổi tiếng gần khu vực Hoàn Kiếm",
+    distance: "0.8 km",
+    priceRange: "40K - 80K",
+    highlights: ["Phở bò tái", "Nước dùng đậm đà", "Không gian cổ điển"],
   },
   {
-    id: "5",
+    id: "food-2",
+    name: "Bún Chả Hương Liên",
+    image: "/src/assets/bun_cha_huong_lien.jpg",
+    category: "food",
+    rating: 4.6,
+    matchScore: 94,
+    reason:
+      "Quán bún chả nổi tiếng, phù hợp nếu bạn muốn trải nghiệm ẩm thực Hà Nội",
+    distance: "1.2 km",
+    priceRange: "50K - 120K",
+    highlights: ["Bún chả chuẩn Hà Nội", "Nem rán ngon", "Phục vụ nhanh"],
+  },
+  {
+    id: "food-3",
+    name: "Chả Cá Thăng Long",
+    image: "/src/assets/cha_ca_thang_long.jpg",
+    category: "food",
+    rating: 4.5,
+    matchScore: 91,
+    reason: "Món chả cá đặc trưng Hà Nội, trải nghiệm ẩm thực bản địa",
+    distance: "1.0 km",
+    priceRange: "120K - 300K",
+    highlights: [
+      "Chả cá Lã Vọng style",
+      "Gia vị đặc trưng",
+      "Không gian ấm cúng",
+    ],
+  },
+  {
+    id: "cafe-1",
     name: "Cà phê Giảng",
-    image: cafeImage,
-    category: "Cà phê",
+    image: "/src/assets/ca_phe_giang.jpeg",
+    category: "cafe",
     rating: 4.7,
     matchScore: 95,
-    reason: "Gần vị trí hiện tại và có wifi tốt",
-    distance: "0.3 km",
+    reason: "Cà phê trứng truyền thống, yên tĩnh vào buổi sáng",
+    distance: "0.4 km",
     priceRange: "30K - 60K",
-    highlights: ["Cà phê trứng nổi tiếng", "View Hồ Gươm", "Yên tĩnh"],
+    highlights: ["Cà phê trứng", "View Hồ Gươm", "Phong cách cổ kính"],
   },
   {
-    id: "3",
-    name: "Chợ Đêm Phú Quốc",
-    image: nightmarketImage,
-    category: "Ẩm thực đường phố",
+    id: "cafe-2",
+    name: "The Note Coffee",
+    image: "/src/assets/the_note_coffee.jpg",
+    category: "cafe",
+    rating: 4.4,
+    matchScore: 90,
+    reason: "Không gian sáng, phù hợp làm việc và chụp ảnh nhẹ",
+    distance: "0.9 km",
+    priceRange: "40K - 90K",
+    highlights: ["Wifi tốt", "Bàn làm việc", "Góc sống ảo"],
+  },
+  {
+    id: "cafe-3",
+    name: "Tranquil Books & Coffee",
+    image: "/src/assets/tranquil_books_coffee.jpg",
+    category: "cafe",
+    rating: 4.5,
+    matchScore: 92,
+    reason: "Không gian yên tĩnh, nhiều ổ cắm, thích hợp làm việc cả ngày",
+    distance: "1.5 km",
+    priceRange: "50K - 120K",
+    highlights: [
+      "Không gian yên tĩnh",
+      "Ổ cắm và bàn làm việc",
+      "Đồ uống đa dạng",
+    ],
+  },
+  {
+    id: "ent-1",
+    name: "Phố Tạ Hiện",
+    image: "/src/assets/ta_hien.jpg",
+    category: "entertainment",
+    rating: 4.3,
+    matchScore: 89,
+    reason:
+      "Khu phố đi bộ náo nhiệt về đêm, phù hợp cho buổi đi chơi cuối tuần",
+    distance: "0.7 km",
+    priceRange: "50K - 200K",
+    highlights: ["Đồ ăn đường phố", "Bar mini", "Không khí sôi động"],
+  },
+  {
+    id: "ent-2",
+    name: "Rạp chiếu phim CGV Vincom Bà Triệu",
+    image: "/src/assets/cgv_vincom.jpg",
+    category: "entertainment",
+    rating: 4.2,
+    matchScore: 86,
+    reason: "Rạp hiện đại, tiện lợi cho lịch xem phim cuối tuần",
+    distance: "1.6 km",
+    priceRange: "120K - 250K",
+    highlights: [
+      "Phòng chiếu hiện đại",
+      "Vị trí trung tâm",
+      "Nhiều suất chiếu",
+    ],
+  },
+  {
+    id: "ent-3",
+    name: "Royal City - Ice Skating & Entertainment",
+    image: "/src/assets/royal_city.jpg",
+    category: "entertainment",
+    rating: 4.4,
+    matchScore: 88,
+    reason:
+      "Trung tâm giải trí lớn, có trượt băng và nhiều hoạt động cho nhóm bạn",
+    distance: "4.0 km",
+    priceRange: "100K - 400K",
+    highlights: ["Trượt băng", "Khu ẩm thực", "Mua sắm & giải trí"],
+  },
+  {
+    id: "trend-1",
+    name: "Phố cổ Hà Nội - Phố hàng Mã",
+    image: "/src/assets/old_quarter_checkin.jpg",
+    category: "trending",
     rating: 4.6,
     matchScore: 92,
-    reason: "Trending tuần này với 432 khoảnh khắc mới",
-    distance: "2.1 km",
-    priceRange: "100K - 300K",
-    highlights: ["Hải sản tươi sống", "Không khí sôi động", "Nhiều món độc đáo"],
+    reason: "Nhiều góc sống ảo, phù hợp cho Instagram và chụp ảnh",
+    distance: "0.6 km",
+    priceRange: "0K - 200K",
+    highlights: ["Góc phố cổ", "Sinh động", "Nhiều background đẹp"],
+  },
+  {
+    id: "trend-2",
+    name: "Lotte Observation Deck (Ba Đình)",
+    image: "/src/assets/lotte_deck.jpg",
+    category: "trending",
+    rating: 4.5,
+    matchScore: 90,
+    reason:
+      "View toàn cảnh thành phố, rất ưa chuộng để chụp phong cảnh ban đêm",
+    distance: "3.2 km",
+    priceRange: "50K - 200K",
+    highlights: ["View skyline", "Hoàng hôn & nightscape", "Chỗ chụp ảnh đẹp"],
+  },
+  {
+    id: "trend-3",
+    name: "Cầu Long Biên",
+    image: "/src/assets/long_bien_bridge.jpg",
+    category: "trending",
+    rating: 4.4,
+    matchScore: 89,
+    reason:
+      "Cầu lịch sử với nhiều góc ảnh nghệ thuật, phù hợp cho ảnh check-in",
+    distance: "1.8 km",
+    priceRange: "0K - 50K",
+    highlights: ["Cảnh hoàng hôn", "Góc nghệ thuật", "Không gian thoáng"],
   },
 ];
 
 const AIRecommend = () => {
   const [prompt, setPrompt] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasResults, setHasResults] = useState(false);
   const [selectedPrompt, setSelectedPrompt] = useState<string | null>(null);
+  const [recommendations, setRecommendations] = useState<any[]>([]);
 
   const handleSubmit = () => {
     if (!prompt.trim()) return;
     setIsLoading(true);
     // Simulate AI processing
+    const filtered = sampleRecommendations.filter(
+      (item) => item.category === prompt
+    );
+    setRecommendations(filtered);
+    const c = quickPrompts.find((p) => p.text === selectedPrompt)?.category;
+    setSelectedCategory(c || "food");
     setTimeout(() => {
       setIsLoading(false);
       setHasResults(true);
@@ -104,7 +243,10 @@ const AIRecommend = () => {
           {/* Animated background */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/10 blur-[100px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/10 blur-[80px] animate-pulse" style={{ animationDelay: "1s" }} />
+            <div
+              className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-accent/10 blur-[80px] animate-pulse"
+              style={{ animationDelay: "1s" }}
+            />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-secondary/5 blur-[120px]" />
           </div>
 
@@ -126,11 +268,15 @@ const AIRecommend = () => {
               </h1>
 
               <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Mô tả những gì bạn đang tìm kiếm, AI sẽ phân tích sở thích, vị trí và xu hướng để đề xuất địa điểm phù hợp nhất
+                Mô tả những gì bạn đang tìm kiếm, AI sẽ phân tích sở thích, vị
+                trí và xu hướng để đề xuất địa điểm phù hợp nhất
               </p>
 
               {/* Main Input */}
-              <Card variant="elevated" className="max-w-3xl mx-auto border-2 border-primary/20 shadow-xl">
+              <Card
+                variant="elevated"
+                className="max-w-3xl mx-auto border-2 border-primary/20 shadow-xl"
+              >
                 <CardContent className="p-4 md:p-6">
                   <div className="relative">
                     <Textarea
@@ -161,12 +307,16 @@ const AIRecommend = () => {
 
                   {/* Quick Prompts */}
                   <div className="mt-4 pt-4 border-t">
-                    <p className="text-sm text-muted-foreground mb-3">Gợi ý nhanh:</p>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Gợi ý nhanh:
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {quickPrompts.map((item, index) => (
                         <Button
                           key={index}
-                          variant={selectedPrompt === item.text ? "default" : "outline"}
+                          variant={
+                            selectedPrompt === item.text ? "default" : "outline"
+                          }
                           size="sm"
                           className="gap-2"
                           onClick={() => handleQuickPrompt(item.text)}
@@ -184,15 +334,21 @@ const AIRecommend = () => {
               <div className="flex flex-wrap justify-center gap-8 mt-12">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-primary">50K+</div>
-                  <p className="text-sm text-muted-foreground">Địa điểm được phân tích</p>
+                  <p className="text-sm text-muted-foreground">
+                    Địa điểm được phân tích
+                  </p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-accent">98%</div>
-                  <p className="text-sm text-muted-foreground">Độ chính xác gợi ý</p>
+                  <p className="text-sm text-muted-foreground">
+                    Độ chính xác gợi ý
+                  </p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-secondary">1M+</div>
-                  <p className="text-sm text-muted-foreground">Đánh giá được học</p>
+                  <p className="text-sm text-muted-foreground">
+                    Đánh giá được học
+                  </p>
                 </div>
               </div>
             </div>
@@ -208,78 +364,93 @@ const AIRecommend = () => {
                   <Sparkles className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Gợi ý dành riêng cho bạn</h2>
+                  <h2 className="text-2xl font-bold">
+                    Gợi ý dành riêng cho bạn
+                  </h2>
                   <p className="text-muted-foreground">Dựa trên: "{prompt}"</p>
                 </div>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {sampleRecommendations.map((place, index) => (
-                  <Link key={place.id} to={`/place/${place.id}`}>
-                    <Card
-                      variant="interactive"
-                      className="overflow-hidden h-full group"
-                      style={{ animationDelay: `${index * 150}ms` }}
-                    >
-                      {/* Image */}
-                      <div className="relative aspect-[4/3] overflow-hidden">
-                        <img
-                          src={place.image}
-                          alt={place.name}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                {sampleRecommendations
+                  .filter((item) => item.category === selectedCategory)
+                  .map((place, index) => (
+                    <Link key={place.id} to={`/place/${place.id}`}>
+                      <Card
+                        variant="interactive"
+                        className="overflow-hidden h-full group"
+                        style={{ animationDelay: `${index * 150}ms` }}
+                      >
+                        {/* Image */}
+                        <div className="relative aspect-[4/3] overflow-hidden">
+                          <img
+                            src={place.image}
+                            alt={place.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
 
-                        {/* Match Score */}
-                        <div className="absolute top-3 left-3">
-                          <Badge className="gap-1 text-sm font-bold bg-primary">
-                            <ThumbsUp className="w-3.5 h-3.5" />
-                            {place.matchScore}% phù hợp
+                          {/* Match Score */}
+                          <div className="absolute top-3 left-3">
+                            <Badge className="gap-1 text-sm font-bold bg-primary">
+                              <ThumbsUp className="w-3.5 h-3.5" />
+                              {place.matchScore}% phù hợp
+                            </Badge>
+                          </div>
+
+                          {/* Category */}
+                          <Badge
+                            variant="muted"
+                            className="absolute top-3 right-3"
+                          >
+                            {place.category}
                           </Badge>
-                        </div>
 
-                        {/* Category */}
-                        <Badge variant="muted" className="absolute top-3 right-3">
-                          {place.category}
-                        </Badge>
-
-                        {/* Info */}
-                        <div className="absolute bottom-3 left-3 right-3 text-background">
-                          <h3 className="font-bold text-lg line-clamp-1">{place.name}</h3>
-                          <div className="flex items-center gap-3 text-sm text-background/80 mt-1">
-                            <span className="flex items-center gap-1">
-                              <Star className="w-4 h-4 fill-accent text-accent" />
-                              {place.rating}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Navigation className="w-3.5 h-3.5" />
-                              {place.distance}
-                            </span>
-                            <span>{place.priceRange}</span>
+                          {/* Info */}
+                          <div className="absolute bottom-3 left-3 right-3 text-background">
+                            <h3 className="font-bold text-lg line-clamp-1">
+                              {place.name}
+                            </h3>
+                            <div className="flex items-center gap-3 text-sm text-background/80 mt-1">
+                              <span className="flex items-center gap-1">
+                                <Star className="w-4 h-4 fill-accent text-accent" />
+                                {place.rating}
+                              </span>
+                              <span className="flex items-center gap-1">
+                                <Navigation className="w-3.5 h-3.5" />
+                                {place.distance}
+                              </span>
+                              <span>{place.priceRange}</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Content */}
-                      <CardContent className="p-4">
-                        {/* AI Reason */}
-                        <div className="flex items-start gap-2 mb-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
-                          <Sparkles className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                          <p className="text-sm text-primary">{place.reason}</p>
-                        </div>
+                        {/* Content */}
+                        <CardContent className="p-4">
+                          {/* AI Reason */}
+                          <div className="flex items-start gap-2 mb-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
+                            <Sparkles className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <p className="text-sm text-primary">
+                              {place.reason}
+                            </p>
+                          </div>
 
-                        {/* Highlights */}
-                        <div className="flex flex-wrap gap-1.5">
-                          {place.highlights.map((highlight, i) => (
-                            <Badge key={i} variant="outline" className="text-xs">
-                              {highlight}
-                            </Badge>
-                          ))}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                          {/* Highlights */}
+                          <div className="flex flex-wrap gap-1.5">
+                            {place.highlights.map((highlight, i) => (
+                              <Badge
+                                key={i}
+                                variant="outline"
+                                className="text-xs"
+                              >
+                                {highlight}
+                              </Badge>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
               </div>
 
               <div className="text-center mt-8">
@@ -296,9 +467,12 @@ const AIRecommend = () => {
         <section className="py-16">
           <div className="container">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4">AI hiểu bạn như thế nào?</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                AI hiểu bạn như thế nào?
+              </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Hệ thống AI của chúng tôi kết hợp nhiều nguồn dữ liệu để đưa ra gợi ý chính xác nhất
+                Hệ thống AI của chúng tôi kết hợp nhiều nguồn dữ liệu để đưa ra
+                gợi ý chính xác nhất
               </p>
             </div>
 
@@ -307,34 +481,46 @@ const AIRecommend = () => {
                 {
                   icon: Heart,
                   title: "Sở thích cá nhân",
-                  description: "Phân tích lịch sử đánh giá, địa điểm yêu thích và thói quen của bạn",
+                  description:
+                    "Phân tích lịch sử đánh giá, địa điểm yêu thích và thói quen của bạn",
                   color: "text-red-500 bg-red-500/10",
                 },
                 {
                   icon: MapPin,
                   title: "Vị trí thông minh",
-                  description: "Xem xét khoảng cách, giao thông và thời gian di chuyển thực tế",
+                  description:
+                    "Xem xét khoảng cách, giao thông và thời gian di chuyển thực tế",
                   color: "text-blue-500 bg-blue-500/10",
                 },
                 {
                   icon: TrendingUp,
                   title: "Xu hướng real-time",
-                  description: "Cập nhật đánh giá mới, độ đông và các khoảnh khắc được chia sẻ",
+                  description:
+                    "Cập nhật đánh giá mới, độ đông và các khoảnh khắc được chia sẻ",
                   color: "text-green-500 bg-green-500/10",
                 },
                 {
                   icon: Clock,
                   title: "Thời điểm phù hợp",
-                  description: "Gợi ý dựa trên giờ mở cửa, thời tiết và sự kiện đang diễn ra",
+                  description:
+                    "Gợi ý dựa trên giờ mở cửa, thời tiết và sự kiện đang diễn ra",
                   color: "text-orange-500 bg-orange-500/10",
                 },
               ].map((feature, index) => (
-                <Card key={index} variant="elevated" className="text-center p-6">
-                  <div className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mx-auto mb-4`}>
+                <Card
+                  key={index}
+                  variant="elevated"
+                  className="text-center p-6"
+                >
+                  <div
+                    className={`w-14 h-14 rounded-2xl ${feature.color} flex items-center justify-center mx-auto mb-4`}
+                  >
                     <feature.icon className="w-7 h-7" />
                   </div>
                   <h3 className="font-bold text-lg mb-2">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {feature.description}
+                  </p>
                 </Card>
               ))}
             </div>
