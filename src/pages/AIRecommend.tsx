@@ -44,7 +44,7 @@ const sampleRecommendations = [
   {
     id: "food-1",
     name: "Phở Bát Đàn",
-    image: "/src/assets/pho_bat_dan.jpg",
+    image: "/pho_bat_dan.jpg",
     category: "food",
     rating: 4.7,
     matchScore: 96,
@@ -56,7 +56,7 @@ const sampleRecommendations = [
   {
     id: "food-2",
     name: "Bún Chả Hương Liên",
-    image: "/src/assets/bun_cha_huong_lien.jpg",
+    image: "/bun_cha_huong_lien.jpg",
     category: "food",
     rating: 4.6,
     matchScore: 94,
@@ -69,7 +69,7 @@ const sampleRecommendations = [
   {
     id: "food-3",
     name: "Chả Cá Thăng Long",
-    image: "/src/assets/cha_ca_thang_long.jpg",
+    image: "/cha_ca_thang_long.jpg",
     category: "food",
     rating: 4.5,
     matchScore: 91,
@@ -85,7 +85,7 @@ const sampleRecommendations = [
   {
     id: "cafe-1",
     name: "Cà phê Giảng",
-    image: "/src/assets/ca_phe_giang.jpeg",
+    image: "/ca_phe_giang.jpeg",
     category: "cafe",
     rating: 4.7,
     matchScore: 95,
@@ -97,7 +97,7 @@ const sampleRecommendations = [
   {
     id: "cafe-2",
     name: "The Note Coffee",
-    image: "/src/assets/the_note_coffee.jpg",
+    image: "/the_note_coffee.jpg",
     category: "cafe",
     rating: 4.4,
     matchScore: 90,
@@ -109,7 +109,7 @@ const sampleRecommendations = [
   {
     id: "cafe-3",
     name: "Tranquil Books & Coffee",
-    image: "/src/assets/tranquil_books_coffee.jpg",
+    image: "/tranquil_books_coffee.jpg",
     category: "cafe",
     rating: 4.5,
     matchScore: 92,
@@ -125,7 +125,7 @@ const sampleRecommendations = [
   {
     id: "ent-1",
     name: "Phố Tạ Hiện",
-    image: "/src/assets/ta_hien.jpg",
+    image: "/ta_hien.jpg",
     category: "entertainment",
     rating: 4.3,
     matchScore: 89,
@@ -138,7 +138,7 @@ const sampleRecommendations = [
   {
     id: "ent-2",
     name: "Rạp chiếu phim CGV Vincom Bà Triệu",
-    image: "/src/assets/cgv_vincom.jpg",
+    image: "/cgv_vincom.jpg",
     category: "entertainment",
     rating: 4.2,
     matchScore: 86,
@@ -154,7 +154,7 @@ const sampleRecommendations = [
   {
     id: "ent-3",
     name: "Royal City - Ice Skating & Entertainment",
-    image: "/src/assets/royal_city.jpg",
+    image: "/royal_city.jpg",
     category: "entertainment",
     rating: 4.4,
     matchScore: 88,
@@ -167,7 +167,7 @@ const sampleRecommendations = [
   {
     id: "trend-1",
     name: "Phố cổ Hà Nội - Phố hàng Mã",
-    image: "/src/assets/old_quarter_checkin.jpg",
+    image: "/old_quarter_checkin.jpg",
     category: "trending",
     rating: 4.6,
     matchScore: 92,
@@ -179,7 +179,7 @@ const sampleRecommendations = [
   {
     id: "trend-2",
     name: "Lotte Observation Deck (Ba Đình)",
-    image: "/src/assets/lotte_deck.jpg",
+    image: "/lotte_deck.jpg",
     category: "trending",
     rating: 4.5,
     matchScore: 90,
@@ -192,7 +192,7 @@ const sampleRecommendations = [
   {
     id: "trend-3",
     name: "Cầu Long Biên",
-    image: "/src/assets/long_bien_bridge.jpg",
+    image: "/long_bien_bridge.jpg",
     category: "trending",
     rating: 4.4,
     matchScore: 89,
@@ -216,13 +216,15 @@ const AIRecommend = () => {
     if (!prompt.trim()) return;
     setIsLoading(true);
     // Simulate AI processing
-    const filtered = sampleRecommendations.filter(
-      (item) => item.category === prompt
-    );
-    setRecommendations(filtered);
-    const c = quickPrompts.find((p) => p.text === selectedPrompt)?.category;
-    setSelectedCategory(c || "food");
+
     setTimeout(() => {
+      const filtered = sampleRecommendations.filter(
+        (item) => item.category === prompt
+      );
+      setRecommendations(filtered);
+      const c = quickPrompts.find((p) => p.text === selectedPrompt)?.category;
+      setSelectedCategory(c || "food");
+
       setIsLoading(false);
       setHasResults(true);
     }, 2000);
